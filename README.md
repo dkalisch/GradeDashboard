@@ -1,28 +1,9 @@
-<p align="center">
-    <a href="https://www.gratipay.com/Shields/">
-        <img src="https://img.shields.io/badge/license-by--nc--sa%204.0-blue.svg"
-             alt="License">
-    </a>
-    <a href="https://npmjs.org/package/gh-badges">
-        <img src="https://img.shields.io/badge/status-beta-yellowgreen.svg"
-             alt="status">
-    </a>
-    <a href="https://travis-ci.org/badges/shields">
-        <img src="https://img.shields.io/badge/R-3.2.2-lightgrey.svg"
-             alt="R Version">
-    </a>
-    <a href="https://travis-ci.org/badges/shields">
-        <img src="https://img.shields.io/badge/shiny-0.13-lightgrey.svg"
-             alt="Shiny Version">
-    </a>
-</p>
-
-
 # GradeDashboard
 <img src="https://img.shields.io/badge/license-by--nc--sa%204.0-blue.svg" alt="License">
 <img src="https://img.shields.io/badge/status-beta-yellowgreen.svg" alt="status">
 <img src="https://img.shields.io/badge/R-3.2.2-lightgrey.svg" alt="R Version">
 <img src="https://img.shields.io/badge/shiny-0.13-lightgrey.svg" alt="Shiny Version">
+
 ## About
 A professor get often asked what the current grade of a student is and also how this grade is composed. Typically this is not difficult since it is just an addition of the sub grades of a student. For example, the course grade might be composed based on quizzes, exams and class participation. Whereas each part again consist of multiple points like three exams, ten quizzes and 40 days of participation. However, for a student this composition is difficult to understand and not very transparent, since most of the time the student only sees the course grade, sometimes also the individual exams grades.
 
