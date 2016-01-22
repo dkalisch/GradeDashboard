@@ -60,37 +60,37 @@ This sheet provides the dashboard with all necessary settings.
 <dl>
     <dt>Number of Students</dt>
     <dd>The number of students in class</dd>
-<br>
+
     <dt>Row number max points</dt>
     <dd>Row number which holds the information of the maximal number of points that can be reached for a particular grade part</dd>
-<br>
+
     <dt>Good</dt>
     <dd>The ratio above which the grade is to be considered good (green) [numeric between 0 and 1]</dd>
-<br>
+
     <dt>Average</dt>
     <dd>The ratio above which the grade is to be considered averarge. (yellow) [numeric between 0 and 1]</dd>
-<br>
+
     <dt>Poor</dt>
     <dd>The ratio above which the grade is to be considered poor. (red) [numeric between 0 and 1]</dd>
-<br>
+
     <dt>Exam</dt>
     <dd>Does this class has a grade portion from exams? [yes or no]</dd>
-<br>
+
     <dt>Assignment</dt>
     <dd>Does this class has a grade portion from assignments? [yes or no]</dd>
-<br>
+
     <dt>Quiz</dt>
     <dd>Does this class has a grade portion from quizzes? [yes or no]</dd>
-<br>
+
     <dt>Class Participation</dt>
     <dd>Does this class has a grade portion from class participation? [yes or no]</dd>
-<br>
+
     <dt>Extra Points</dt>
     <dd>Does this class has a grade portion from extra points? [yes or no]</dd>
-<br>
+
     <dt>Presentation</dt>
     <dd>Does this class has a grade portion from presentations? [yes or no]</dd>
-<br>
+
     <dt>Homework</dt>
     <dd>Does this class has a grade portion from homework? [yes or no]</dd>
 </dl>
