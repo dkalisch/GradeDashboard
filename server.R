@@ -150,8 +150,8 @@ shinyServer(function(input, output, session) {
   # Get data for specific student
   gradesStudent <- reactive({
     grades() %>%
-      #filter(ID.number == input$id & Email.address == input$email)
-      filter(ID.number == input$id)
+      filter(ID.number == input$id & Email.address == input$email)
+      #filter(ID.number == input$id)
   })
   
   # Boxes for the overall performance
