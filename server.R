@@ -200,7 +200,8 @@ shinyServer(function(input, output, session) {
     studentRank <- rank(grades()$Course.total)[r]
     
     valueBox(
-      studentRank, "Rank",
+      paste0("Rank #", studentRank),
+      paste0("in class out of ", nStudents()),
       icon = icon("user", lib = "glyphicon"),
       color = "aqua"
     )
