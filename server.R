@@ -132,9 +132,11 @@ shinyServer(function(input, output, session) {
     grades.max <- read.xlsx(file = paste0("data/", input$selectCourse, ".xlsx", sep = ""),
                             sheetName = "Grades",
                             startRow = as.numeric(maxPoints())-1,
-                            endRow = as.numeric(maxPoints()))
-  
-    colnames(grades.max) <- c("A", colnames(grades())[-c(1:3)])
+                            endRow = as.numeric(maxPoints()),
+                            colIndex = 1:ncol(grades()))
+    
+    grades.max <- grades.max[-c(1:2)]
+    colnames(grades.max) <- c("A", colnames(grades())[-c(1:5)])
     grades.max
   })
   
@@ -196,8 +198,8 @@ shinyServer(function(input, output, session) {
   })
   
   output$classRank <- renderValueBox({
-    r <- which(grades()$ID.number == input$id)
-    studentRank <- rank(grades()$Course.total)[r]
+    tmp.df <- grades()[order(grades()$Course.total, decreasing = TRUE),]
+    studentRank <- which(tmp.df$ID.number == input$id)
     
     valueBox(
       paste0("Rank #", studentRank),
@@ -221,7 +223,7 @@ shinyServer(function(input, output, session) {
         }
         
         # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l())){
+        if(pp/100 >= as.numeric(good.l()) | mp == 0){
           c.vb <- "green"
           i.vb <- "thumbs-up"
         } else if(pp/100 >= as.numeric(average.l())){
@@ -253,7 +255,7 @@ shinyServer(function(input, output, session) {
         }
         
         # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l())){
+        if(pp/100 >= as.numeric(good.l()) | pp == 0){
           c.vb <- "green"
           i.vb <- "thumbs-up"
         } else if(pp/100 >= as.numeric(average.l())){
@@ -285,7 +287,7 @@ shinyServer(function(input, output, session) {
         }
         
         # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l())){
+        if(pp/100 >= as.numeric(good.l()) | pp == 0){
           c.vb <- "green"
           i.vb <- "thumbs-up"
         } else if(pp/100 >= as.numeric(average.l())){
@@ -317,7 +319,7 @@ shinyServer(function(input, output, session) {
         }
         
         # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l())){
+        if(pp/100 >= as.numeric(good.l()) | pp == 0){
           c.vb <- "green"
           i.vb <- "thumbs-up"
         } else if(pp/100 >= as.numeric(average.l())){
@@ -349,7 +351,7 @@ shinyServer(function(input, output, session) {
         }
         
         # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l())){
+        if(pp/100 >= as.numeric(good.l()) | pp == 0){
           c.vb <- "green"
           i.vb <- "thumbs-up"
         } else if(pp/100 >= as.numeric(average.l())){
@@ -381,7 +383,7 @@ shinyServer(function(input, output, session) {
         }
         
         # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l())){
+        if(pp/100 >= as.numeric(good.l()) | pp == 0){
           c.vb <- "green"
           i.vb <- "thumbs-up"
         } else if(pp/100 >= as.numeric(average.l())){
@@ -413,7 +415,7 @@ shinyServer(function(input, output, session) {
         }
         
         # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l())){
+        if(pp/100 >= as.numeric(good.l()) | pp == 0){
           c.vb <- "green"
           i.vb <- "thumbs-up"
         } else if(pp/100 >= as.numeric(average.l())){
