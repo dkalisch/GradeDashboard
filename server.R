@@ -13,7 +13,7 @@ shinyServer(function(input, output, session) {
   gradesSettings <- reactive({
     validate(
       need(input$selectCourse, "select a course"),
-      need(input$id, "enter your id")
+      need(input$id, "enter your studentID")
     )
     read.xlsx2(file = paste0("data/", input$selectCourse, ".xlsx", sep = ""),
                sheetName = "Settings",

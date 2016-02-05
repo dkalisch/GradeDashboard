@@ -10,7 +10,7 @@ dashboardPage(
                 #tags$a(href='http://new.trinity.edu', tags$img(src = 'logos/tlogo.png', height = '167', width = '240')),
                 conditionalPanel("input.sidebarmenu === 'dashboard'",
                                  uiOutput("selectCourse"),
-                                 textInput("id", label = "Enter your ID"),
+                                 textInput("id", label = "Enter your studentID"),
                                  textInput("email", label = "Enter your email")),
                                  submitButton("Get my grade!", icon("graduation-cap")),
                 tags$style(type='text/css', "
