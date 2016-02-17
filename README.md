@@ -1,6 +1,6 @@
 # GradeDashboard
 <img src="https://img.shields.io/badge/license-by--nc--sa%204.0-blue.svg" alt="License">
-<img src="https://img.shields.io/badge/status-beta-yellowgreen.svg" alt="status">
+<img src="https://img.shields.io/badge/status-alpha-yellowgreen.svg" alt="status">
 <img src="https://img.shields.io/badge/R-3.2.2-lightgrey.svg" alt="R Version">
 <img src="https://img.shields.io/badge/shiny-0.13-lightgrey.svg" alt="Shiny Version">
 
