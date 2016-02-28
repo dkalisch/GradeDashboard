@@ -24,6 +24,7 @@ dashboardPage(
                 br(),
                 menuItem("Dashboard", tabName = "dashboard", icon = icon("tachometer")),
                 menuItem("Timeline", tabName = "timeline", icon = icon("area-chart")),
+                menuItem("Class", tabName = "class", icon = icon("area-chart")),
                 menuItem("Raw data", tabName = "rawdata", icon = icon("table")),
                 br(),
                 br(),
@@ -77,6 +78,16 @@ dashboardPage(
                 plotOutput('assignmentPlot'),
                 br(),
                 plotOutput('quizPlot')
+              )
+      ),
+      tabItem("class",
+              h2("Class distribution Exam 1"),
+              fluidRow(
+#                verbatimTextOutput("test"),
+                plotOutput("Exam1class"),
+                br(),
+                valueBoxOutput("ExamMedian"),
+                valueBoxOutput("ExamMean")
               )
       ),
       tabItem("rawdata",

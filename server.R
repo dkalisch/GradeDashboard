@@ -149,6 +149,20 @@ shinyServer(function(input, output, session) {
     grades()[,6:ncol(grades())] %>% summarise_each(funs(mean))
   })
   
+  # Get reference data
+  gradesRef <- reactive({
+    validate(
+      need(input$selectCourse, "select a course"),
+      need(input$id, "enter your studentID")
+    )
+    read.xlsx2(file = paste0("data/", input$selectCourse, ".xlsx", sep = ""),
+               sheetName = "Reference",
+               header = TRUE,
+               stringsAsFactors = FALSE,
+               startRow = 1,
+               endRow = 12)
+  })
+  
   # Get data for specific student
   gradesStudent <- reactive({
     grades() %>%
@@ -690,6 +704,88 @@ shinyServer(function(input, output, session) {
       }, bg = "transparent")
     }
   })
+
+##########################################  
+#### This code need to be generatlized!###
+##########################################
+
+  exam.sum <- reactive({
+    tmp <- data.frame(Exam = grades()$Exam.1, Ratio = grades()$Exam.1/gradesMax()$Exam.1)
+    
+    for(i in 1:nrow(gradesRef())){
+      tmp$Letter[tmp$Ratio >= gradesRef()$Start[i] & tmp$Ratio < gradesRef()$End[i]] <- gradesRef()$Grade[i] 
+    }
+    
+    tmp$Letter <- factor(tmp$Letter, levels=c("A+", gradesRef()$Grade))
+    
+    tmp.mean <- data.frame(mean = mean(tmp$Ratio))
+    tmp.median <- data.frame(median = median(tmp$Ratio))
+    
+    for(i in 1:nrow(gradesRef())){
+      tmp.median$Letter[tmp.median$median >= gradesRef()$Start[i] & tmp.median$median < gradesRef()$End[i]] <- gradesRef()$Grade[i] 
+    }
+    
+    for(i in 1:nrow(gradesRef())){
+      tmp.mean$Letter[tmp.mean$mean >= gradesRef()$Start[i] & tmp.mean$mean < gradesRef()$End[i]] <- gradesRef()$Grade[i] 
+    }
+    
+    list(tmp, tmp.mean, tmp.median)
+    
+  })
+  
+  output$ExamMedian <- renderValueBox({
+    df <- exam.sum()[[3]]
+    
+    valueBox(
+      df$Letter,
+      paste0("Median (Ratio: ", round(df$median, 2), ")", sep = ""),
+      color = "blue"
+    )
+  })
+  
+  output$ExamMean <- renderValueBox({
+    df <- exam.sum()[[2]]
+    
+    valueBox(
+      df$Letter,
+      paste0("Mean (Ratio: ", round(df$mean, 2), ")", sep = ""),
+      color = "blue"
+    )
+  })
+  
+
+#    output$test <- renderPrint({
+#    df <- exam.sum()[[2]]
+    #df$Letter <- as.factor(df$Letter)
+#    str(df)
+#    ggplot(df, aes(x = Letter)) +
+#      geom_bar()
+#  })
+  
+  output$Exam1class <- renderPlot({
+    
+    df <- exam.sum()[[1]]
+    px <- "Letter Grades"
+    py <- "Count"
+    pt <- "Class Performance"
+    
+    p <- ggplot(df, aes(x = Letter)) +
+      geom_bar() +
+      labs(x = px, y = py) +
+      ggtitle(pt) +
+      theme(axis.text.x = element_text(hjust = 1, size = 12),
+            axis.text.y = element_text(size = 12),
+            axis.title.y = element_text(size = 14, vjust = 1.5),
+            axis.title.x = element_text(size = 14, vjust = -1.5),
+            plot.title = element_text(size = 18, vjust = 2),
+            plot.margin = unit(c(1, 1, 1, 1), "lines"),
+            plot.background = element_rect(fill = "transparent",colour = NA),
+            legend.background = element_rect(fill = "transparent",colour = NA),
+            legend.position="top"
+      )
+    
+    print(p)
+  }, bg = "transparent")
   
   
   # Raw data
