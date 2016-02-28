@@ -1,4 +1,5 @@
 library(shiny)
+source("functions/visualize.R")
 
 shinyServer(function(input, output, session) {
 
@@ -172,43 +173,17 @@ shinyServer(function(input, output, session) {
   
   # Boxes for the overall performance
   output$letterGrade <- renderValueBox({
-    # Set valuebox parameter depending on performance
-    if(gradesStudent()$Course.total >= as.numeric(good.l())){
-      c.vb <- "green"
-      i.vb <- "thumbs-up"
-    } else if(gradesStudent()$Course.total >= as.numeric(average.l())){
-      c.vb <- "yellow"
-      i.vb <- "flash"
-    } else {
-      c.vb <- "red"
-      i.vb <- "fire"
-    }
-    
-    valueBox(
-      gradesStudent()$Grade, "Letter Grade",
-      icon = icon(i.vb, lib = "glyphicon"),
-      color = c.vb
-    )
+    createValueBox(value = gradesStudent()$Grade, 
+                   value.check = gradesStudent()$Course.total,
+                   title = "Letter Grade",
+                   good = good.l(), average = average.l())
   })
   
   output$percentGrade <- renderValueBox({
-    # Set valuebox parameter depending on performance
-    if(gradesStudent()$Course.total >= as.numeric(good.l())){
-      c.vb <- "green"
-      i.vb <- "thumbs-up"
-    } else if(gradesStudent()$Course.total >= as.numeric(average.l())){
-      c.vb <- "yellow"
-      i.vb <- "flash"
-    } else {
-      c.vb <- "red"
-      i.vb <- "fire"
-    }
-    
-    valueBox(
-      paste0(round(gradesStudent()$Course.total * 100, 2), "%"), "Percentage",
-      icon = icon(i.vb, lib = "glyphicon"),
-      color = c.vb
-    )
+    createValueBox(value = paste0(round(gradesStudent()$Course.total * 100, 2), "%"), 
+                   value.check = gradesStudent()$Course.total,
+                   title = "Percentage",
+                   good = good.l(), average = average.l())
   })
   
   output$classRank <- renderValueBox({
@@ -230,30 +205,17 @@ shinyServer(function(input, output, session) {
       output$extraPoints <- renderValueBox({
         sp <- gradesStudent()$Extra.points
         mp <- gradesMax()$Extra.points
-        if(sp == 0){
+        if(mp == 0){
           pp <- 0
         } else {
           pp <- round(sp/mp*100, 2)
         }
         
-        # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l()) | mp == 0){
-          c.vb <- "green"
-          i.vb <- "thumbs-up"
-        } else if(pp/100 >= as.numeric(average.l())){
-          c.vb <- "yellow"
-          i.vb <- "flash"
-        } else {
-          c.vb <- "red"
-          i.vb <- "fire"
-        }
-        
-        valueBox(
-          paste0(sp, " (", pp, "%)"),
-          paste0("out of ", mp, " from Extra Points", sep = ""),
-          icon = icon(i.vb, lib = "glyphicon"),
-          color = c.vb
-        )
+        createValueBox(value = paste0(sp, " (", pp, "%)"), 
+                       value.check = pp/100,
+                       max.value = mp,
+                       title = paste0("out of ", mp, " from Extra Points", sep = ""),
+                       good = good.l(), average = average.l())
       })
     }
 
@@ -262,30 +224,17 @@ shinyServer(function(input, output, session) {
       output$presentation <- renderValueBox({
         sp <- gradesStudent()$Presentation
         mp <- gradesMax()$Presentation
-        if(sp == 0){
+        if(mp == 0){
           pp <- 0
         } else {
           pp <- round(sp/mp*100, 2)
         }
         
-        # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l()) | pp == 0){
-          c.vb <- "green"
-          i.vb <- "thumbs-up"
-        } else if(pp/100 >= as.numeric(average.l())){
-          c.vb <- "yellow"
-          i.vb <- "flash"
-        } else {
-          c.vb <- "red"
-          i.vb <- "fire"
-        }
-        
-        valueBox(
-          paste0(sp, " (", pp, "%)"),
-          paste0("out of ", mp, " points from Presentations", sep = ""),
-          icon = icon(i.vb, lib = "glyphicon"),
-          color = c.vb
-        )
+        createValueBox(value = paste0(sp, " (", pp, "%)"), 
+                       value.check = pp/100,
+                       max.value = mp,
+                       title = paste0("out of ", mp, " points from Presentations", sep = ""),
+                       good = good.l(), average = average.l())
       })
     }
   
@@ -294,30 +243,17 @@ shinyServer(function(input, output, session) {
       output$examTotal <- renderValueBox({
         sp <- gradesStudent()$Exam.total
         mp <- gradesMax()$Exam.total
-        if(sp == 0){
+        if(mp == 0){
           pp <- 0
         } else {
           pp <- round(sp/mp*100, 2)
         }
         
-        # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l()) | pp == 0){
-          c.vb <- "green"
-          i.vb <- "thumbs-up"
-        } else if(pp/100 >= as.numeric(average.l())){
-          c.vb <- "yellow"
-          i.vb <- "flash"
-        } else {
-          c.vb <- "red"
-          i.vb <- "fire"
-        }
-        
-        valueBox(
-          paste0(sp, " (", pp, "%)"),
-          paste0("out of ", mp, " points from Exams", sep = ""),
-          icon = icon(i.vb, lib = "glyphicon"),
-          color = c.vb
-        )
+        createValueBox(value = paste0(sp, " (", pp, "%)"), 
+                       value.check = pp/100,
+                       max.value = mp,
+                       title = paste0("out of ", mp, " points from Exams", sep = ""),
+                       good = good.l(), average = average.l())
       })
     }
     
@@ -326,30 +262,17 @@ shinyServer(function(input, output, session) {
       output$assignmentTotal <- renderValueBox({
         sp <- gradesStudent()$Assignment.total
         mp <- gradesMax()$Assignment.total
-        if(sp == 0){
+        if(mp == 0){
           pp <- 0
         } else {
           pp <- round(sp/mp*100, 2)
         }
         
-        # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l()) | pp == 0){
-          c.vb <- "green"
-          i.vb <- "thumbs-up"
-        } else if(pp/100 >= as.numeric(average.l())){
-          c.vb <- "yellow"
-          i.vb <- "flash"
-        } else {
-          c.vb <- "red"
-          i.vb <- "fire"
-        }
-        
-        valueBox(
-          paste0(sp, " (", pp, "%)"),
-          paste0("out of ", mp, " points from Assignments", sep = ""),
-          icon = icon(i.vb, lib = "glyphicon"),
-          color = c.vb
-        )
+        createValueBox(value = paste0(sp, " (", pp, "%)"), 
+                       value.check = pp/100,
+                       max.value = mp,
+                       title = paste0("out of ", mp, " points from Assignments", sep = ""),
+                       good = good.l(), average = average.l())
       })
     }
     
@@ -358,30 +281,17 @@ shinyServer(function(input, output, session) {
       output$quizTotal <- renderValueBox({
         sp <- gradesStudent()$Quiz.total
         mp <- gradesMax()$Quiz.total
-        if(sp == 0){
+        if(mp == 0){
           pp <- 0
         } else {
           pp <- round(sp/mp*100, 2)
         }
         
-        # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l()) | pp == 0){
-          c.vb <- "green"
-          i.vb <- "thumbs-up"
-        } else if(pp/100 >= as.numeric(average.l())){
-          c.vb <- "yellow"
-          i.vb <- "flash"
-        } else {
-          c.vb <- "red"
-          i.vb <- "fire"
-        }
-        
-        valueBox(
-          paste0(sp, " (", pp, "%)"),
-          paste0("out of ", mp, " points from Quizzes", sep = ""),
-          icon = icon(i.vb, lib = "glyphicon"),
-          color = c.vb
-        )
+        createValueBox(value = paste0(sp, " (", pp, "%)"), 
+                       value.check = pp/100,
+                       max.value = mp,
+                       title = paste0("out of ", mp, " points from Quizzes", sep = ""),
+                       good = good.l(), average = average.l())
       })
     }
     
@@ -390,30 +300,17 @@ shinyServer(function(input, output, session) {
       output$classParticipationTotal <- renderValueBox({
         sp <- gradesStudent()$Class.Participation.total
         mp <- gradesMax()$Class.Participation.total
-        if(sp == 0){
+        if(mp == 0){
           pp <- 0
         } else {
           pp <- round(sp/mp*100, 2)
         }
         
-        # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l()) | pp == 0){
-          c.vb <- "green"
-          i.vb <- "thumbs-up"
-        } else if(pp/100 >= as.numeric(average.l())){
-          c.vb <- "yellow"
-          i.vb <- "flash"
-        } else {
-          c.vb <- "red"
-          i.vb <- "fire"
-        }
-        
-        valueBox(
-          paste0(sp, " (", pp, "%)"),
-          paste0("out of ", mp, " points from Participation", sep = ""),
-          icon = icon(i.vb, lib = "glyphicon"),
-          color = c.vb
-        )
+        createValueBox(value = paste0(sp, " (", pp, "%)"), 
+                       value.check = pp/100,
+                       max.value = mp,
+                       title = paste0("out of ", mp, " points from Participation", sep = ""),
+                       good = good.l(), average = average.l())
       })
     }
 
@@ -422,30 +319,17 @@ shinyServer(function(input, output, session) {
       output$homeworkTotal <- renderValueBox({
         sp <- gradesStudent()$Homework.total
         mp <- gradesMax()$Homework.total
-        if(sp == 0){
+        if(mp == 0){
           pp <- 0
         } else {
           pp <- round(sp/mp*100, 2)
         }
         
-        # Set valuebox parameter depending on performance
-        if(pp/100 >= as.numeric(good.l()) | pp == 0){
-          c.vb <- "green"
-          i.vb <- "thumbs-up"
-        } else if(pp/100 >= as.numeric(average.l())){
-          c.vb <- "yellow"
-          i.vb <- "flash"
-        } else {
-          c.vb <- "red"
-          i.vb <- "fire"
-        }
-        
-        valueBox(
-          paste0(sp, " (", pp, "%)"),
-          paste0("out of ", mp, " points from Homeworks", sep = ""),
-          icon = icon(i.vb, lib = "glyphicon"),
-          color = c.vb
-        )
+        createValueBox(value = paste0(sp, " (", pp, "%)"), 
+                       value.check = pp/100,
+                       max.value = mp,
+                       title = paste0("out of ", mp, " points from Homeworks", sep = ""),
+                       good = good.l(), average = average.l())
       })
     }
   })
@@ -752,15 +636,6 @@ shinyServer(function(input, output, session) {
       color = "blue"
     )
   })
-  
-
-#    output$test <- renderPrint({
-#    df <- exam.sum()[[2]]
-    #df$Letter <- as.factor(df$Letter)
-#    str(df)
-#    ggplot(df, aes(x = Letter)) +
-#      geom_bar()
-#  })
   
   output$Exam1class <- renderPlot({
     
